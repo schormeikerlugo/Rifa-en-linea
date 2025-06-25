@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RifasOnline</title>
+  <link rel="stylesheet" href="styles/styles.css" />
+  <link rel="icon" href="assets/favicon.png">
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"type="module"></script>
+</head>
+<body>
+  <main>
+    <!-- 🟢 Sección 1: Selección de Rifa -->
+    <section id="rifasSection">
+      <div class="tituloPrincipal">
+        <img src="assets/logo.png" alt="Logo">
+        <h1>Rifas online</h1>
+        <p>
+          Participa en nuestras rifas digitales 100% seguras y transparentes. ¡Con solo unos clics podrías llevarte desde productos tecnológicos hasta experiencias inolvidables!
+        </p>
+      </div>
+
+      <div id="rifasContainer" class="grid"></div>
+    </section>
+
+    <!-- 🟡 Sección 2: Vista de Números y Detalles de Rifa -->
+    <section id="numerosSection" class="numeros-container oculto">
+      <div id="infoRifa" class="info-rifa oculto">
+        <!-- Imagen principal de la rifa -->
+        <img id="infoImagen" class="info-imagen" alt="Imagen de la rifa" />
+
+        <!-- Textos principales -->
+        <div class="info-textos">
+          <h2 id="infoTitulo"></h2>
+          <p id="infoDescripcion"></p>
+          <p><strong>Inicio:</strong> <span id="infoInicio"></span></p>
+          <p><strong>Fin:</strong> <span id="infoFin"></span></p>
+        </div>
+
+        <!-- Galería de imágenes extra -->
+        <div id="galeria-imagenes-extra" class="galeria-extra">
+          <!-- Las imágenes miniatura se insertan dinámicamente aquí -->
+        </div>
+      </div>
+
+      <!-- Números disponibles -->
+      <div id="numerosContainer" class="grid"></div>
+
+      <button id="volverBtn" class="volver-rifa">Volver</button>
+    </section>
+
+    <!-- 🔵 Sección 3: Formulario de Reserva -->
+    <form id="formularioReserva" class="formulario-container oculto">
+      <h3>Reservar número <span id="numeroSeleccionado"></span></h3>
+
+      <input type="text" id="nombre" placeholder="Nombre completo" required />
+      <input type="email" id="correo" placeholder="Correo electrónico" required />
+      <input type="tel" id="telefono" placeholder="Número de teléfono" required />
+      <input type="file" id="comprobante" accept="image/*,application/pdf" required />
+
+      <button type="button" id="btnConfirmar">Confirmar Reserva</button>
+      <button type="button" id="formVolver" class="form-volver">Volver a seleccionar rifa</button>
+    </form>
+  </main>
+
+  <!-- 🔔 Modal de información general -->
+  <div id="modalCustom" class="modal oculto" data-type="info">
+    <div class="modal-overlay"></div>
+    <div class="modal-box">
+      <div class="modal-icono-container">
+        <dotlottie-player
+          id="modalLottie"
+          background="transparent"
+          speed="1"
+          style="width: 300px; height: 300px"
+          direction="1"
+          playMode="bounce"
+          loop
+          autoplay>
+        </dotlottie-player>
+      </div>
+      <p id="modalMensaje">Aquí va el mensaje</p>
+      <button id="modalCerrar">Cerrar</button>
+    </div>
+  </div>
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js"></script>
+  <script type="module" src="js/cliente/app.js"></script>
+</body>
+</html>
