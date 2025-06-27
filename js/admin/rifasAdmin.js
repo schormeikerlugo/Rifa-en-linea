@@ -2,7 +2,7 @@
 import { prepararEdicionRifa } from './editarRifa.js';
 import { cargarReservasPorRifa } from './reservasAdmin.js';
 import { mostrarReservasUI } from './utilsAdmin.js';      // <<<
-import { mostrarModal } from './modalAdmin.js';
+import { mostrarModal, mostrarModalConfirmacion } from './modalAdmin.js';
 import { supabase } from './supabaseClient.js';
 
 const contenedor = document.getElementById('lista-rifas');
@@ -15,8 +15,8 @@ export async function cargarRifas() {
     .order('fecha_inicio');
 
   contenedor.innerHTML = '';
-  if (error) return mostrarModal('❌ Error al cargar rifas.', 'error');
-  if (!data.length) return contenedor.innerHTML = '<p>No hay rifas.</p>';
+  if (error) return mostrarModal('Error al cargar rifas.', 'error'); //❌
+  if (!data.length) return contenedor.innerHTML = '<p>No hay rifas.</p>'; // podria integrar un gif de "no hay rifas" aquí
 
   data.forEach(rifa => {
     const clone = template.content.cloneNode(true);
@@ -40,10 +40,10 @@ export async function cargarRifas() {
     const btnDel = clone.querySelector('.eliminar-rifa');
     btnDel.dataset.id = rifa.id;
     btnDel.addEventListener('click', async () => {
-      if (!confirm('¿Eliminar rifa?')) return;
+      if (! await mostrarModalConfirmacion('¿Eliminar rifa?', 'advertencia', 'eliminar')) return; 
       const { error } = await supabase.from('rifas').delete().eq('id', rifa.id);
-      if (error) return mostrarModal('❌ No se pudo eliminar.', 'error');
-      mostrarModal('🗑️ Rifa eliminada.', 'exito');
+      if (error) return mostrarModal('No se pudo eliminar.', 'error'); //❌
+      mostrarModal('Rifa eliminada.', 'aprobado');
       cargarRifas();
     });
 
@@ -56,7 +56,7 @@ export async function cargarRifas() {
         .select('*')
         .eq('id', rifa.id)
         .single();
-      if (error) return mostrarModal('❌ No se pudo cargar.', 'error');
+      if (error) return mostrarModal('No se pudo cargar.', 'error'); //❌
       prepararEdicionRifa(btnEdit, r);
     });
 

@@ -1,47 +1,92 @@
 /* ===================================
+   📌 VARIABLES DE DISEÑO
+=================================== */
+:root {
+  /* 🎨 Colores primarios */
+  --green:           #10B981;
+  --green-dark:      #059669;
+  --red:             #EF4444;
+  --red-dark:        #B91C1C;
+  --blue:            #2563EB;
+  --blue-dark:       #1D4ED8;
+
+  /* ⚫️ Escala de grises */
+  --gray-light:      #F3F4F6;
+  --gray-medium:     #D1D5DB;
+  --gray-dark:       #6B7280;
+
+  /* ✍️ Tipografía y texto */
+  --text-light:      #F9FAFB;
+  --text-dark:       #111827;
+  --font-base:       'Poppins', sans-serif;
+  --font-size-xs:    0.75rem;
+  --font-size-sm:    0.875rem;
+  --font-size-md:    1rem;
+  --font-size-lg:    1.125rem;
+  --font-size-xl:    1.25rem;
+
+  /* 🟦 Radios */
+  --radius-sm:       8px;
+  --radius-md:       12px;
+  --radius-lg:       24px;
+  --radius-full:     9999px;
+
+  /* ⏱️ Transiciones y sombras */
+  --transition:      0.2s ease-in-out;
+  --shadow-sm:       0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md:       0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg:       0 10px 15px rgba(0, 0, 0, 0.15);
+  --shadow-inset:    inset 0 2px 4px rgba(0, 0, 0, 0.2);
+
+  /* 🌑 Colores utilitarios */
+  --overlay-dark:    rgba(0, 0, 0, 0.5);
+  --glass-dark:      rgba(22, 22, 22, 0.4);
+}
+
+/* ===================================
    🔁 RESET Y BASE
 =================================== */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  
+}
 
+html, body {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+body,
+body.con-scroll {
+  overflow-y: auto;
+}
+
+body.no-scroll {
+  overflow: hidden !important;
 }
 
 body {
+  min-height: 100vh;
+  max-width: 900px;
+  margin: auto;
+  padding: 2rem;
+  font-family: var(--font-base);
+  color: var(--text-light);
+  background-color: #0d1521;
+  background-image: radial-gradient(circle, #222224 2%, transparent 6%);
+  background-size: 40px 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  min-height: 100vh;
-  max-width: 800px;
-  margin: auto;
-  padding: 2rem;
-  color: #ffffff;
-  font-family: 'Poppins', sans-serif;
-  background-color: #0d1521;
-  background-image: radial-gradient(circle, #222224 2%, transparent 6%);
-  background-size: 40px 40px;
-  
-
-  overflow-x: hidden!important;
-}
-
-/* Títulos y textos */
-h1 {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-strong, p {
-  color: inherit;
 }
 
 /* ===================================
    ✨ TRANSICIONES Y VISIBILIDAD
 =================================== */
-
 .transicion {
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
@@ -63,105 +108,66 @@ strong, p {
 }
 
 /* ===================================
-   📌 VARIABLES DE COLOR Y TRANSICIÓN
+   🧾 TITULARES Y TEXTO
 =================================== */
-:root {
-
-    /* 🎨 Colores primarios */
-  --green:           #10B981;
-  --green-dark:      #059669;
-  --red:             #EF4444;
-  --red-dark:        #B91C1C;
-  --blue:            #2563EB;
-  --blue-dark:       #1D4ED8;
-
-  /* ⚫️ Escala de grises */
-  --gray-light:      #F3F4F6;
-  --gray-medium:     #D1D5DB;
-  --gray-dark:       #6B7280;
-
- /* ✍️ Tipografía y color de texto */
-  --text-light:      #F9FAFB;
-  --text-dark:       #111827;
-  --font-base:       'Poppins', sans-serif;
-  --font-size-xs:    0.75rem;   /* 12px */
-  --font-size-sm:    0.875rem;  /* 14px */
-  --font-size-md:    1rem;      /* 16px */
-  --font-size-lg:    1.125rem;  /* 18px */
-  --font-size-xl:    1.25rem;   /* 20px */
-
-   /* 🟦 Border radius */
-  --radius-sm:       4px;
-  --radius-md:       8px;
-  --radius-lg:       12px;
-  --radius-full:     9999px;
-
-   /* ⏱️ Transiciones y sombras */
-  --transition:      0.2s ease-in-out;
-  --shadow-sm:       0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md:       0 4px 6px rgba(0, 0, 0, 0.1);
-  --shadow-lg:       0 10px 15px rgba(0, 0, 0, 0.15);
-  --shadow-inset:    inset 0 2px 4px rgba(0, 0, 0, 0.2);
+h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+strong, p {
+  color: inherit;
 }
 
 /* ===================================
    🔘 BOTONES BASE
 =================================== */
 .btn {
-  font-size: 0.875rem;
-  padding: 0.5rem 1rem;
-  border-radius: 0.375rem;
+  font-size: var(--font-size-sm);
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
   border: 2px solid transparent;
   cursor: pointer;
-  transition: background-color var(--transition),
-              color var(--transition),
-              transform var(--transition);
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
   text-decoration: none;
-  width: auto;
-  padding: 10px;
+  transition: background-color var(--transition), color var(--transition), transform var(--transition);
 }
 
-/* ===================================
-   🎨 ESTILOS DE BOTONES POR ACCIÓN
-=================================== */
-
-/* ✅ Botón de acción positiva (confirmar, guardar, ver) */
+/* 🎨 VARIANTES DE BOTONES */
 .btn-accent {
   background-color: var(--green);
-  color: #fff;  
+  color: #fff;
+  
 }
-
 .btn-accent:hover {
   background-color: var(--green-dark);
   transform: translateY(-2px);
 }
 
-/* ❌ Botón de acción destructiva (eliminar, cancelar fuerte) */
 .btn-danger {
   background-color: var(--red);
   color: #fff;
+  margin-left: 20px;
 }
 .btn-danger:hover {
   background-color: var(--red-dark);
   transform: translateY(-2px);
 }
 
-/* 📝 Botón de acción secundaria (editar, más detalles) */
 .btn-outline {
   background-color: transparent;
   color: var(--gray-dark);
   border: 2px solid var(--gray-dark);
 }
 .btn-outline:hover {
-  background-color: var(--gray-light);
-  transform: translateY(-2px);
+  background: linear-gradient(90deg, var(--gray-light), var(--gray-medium));
+  color: var(--text-dark);
+  transform: scale(1.02);
 }
 
-/* ⚙️ Botón de acción neutra (volver, cancelar suave) */
 .btn-neutral {
+  margin-top: 5%;  
   background-color: var(--gray-light);
   color: var(--text-dark);
 }
@@ -170,7 +176,18 @@ strong, p {
   transform: translateY(-2px);
 }
 
-/* 🔍 Botones de filtros u opciones tipo toggle */
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+#acciones-admin {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  padding: 10px;
+}
+
 .btn-filter {
   background-color: var(--text-dark);
   color: #fff;
@@ -180,67 +197,45 @@ strong, p {
   transform: translateY(-1px);
 }
 
-/* 🚫 Estilo para botones deshabilitados */
-.btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
-}
 /* ===================================
-   🔘 BOTONES PRINCIPALES
-=================================== */
-#acciones-admin {
-  text-align: center;
-  margin-bottom: 1.5rem;
-  padding: 10px;
-}
-
-/* Usa las clases base en el HTML: 
-   <button id="btn-crear" class="btn btn-accent">…</button>
-   <button id="btn-volver" class="btn btn-neutral oculto">…</button>
-*/
-
-/* ===================================
-   🎴 TARJETAS DE RIFAS
+   🎴 TARJETAS DE ADMIN RIFAS
 =================================== */
 .admin-rifa-card {
+  background-color: var(--glass-dark);
+  backdrop-filter: blur(2px);
+  border: 3px solid #000;
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
   display: flex;
   flex-direction: column;
   gap: 16px;
-  background-color: rgba(22, 22, 22, 0.4);
-  backdrop-filter: blur(2px);
-  border: 3px solid #000;
-  border-radius: 10px;
-  padding: 16px;
-  margin-bottom: 16px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 .admin-rifa-card:hover {
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  box-shadow: var(--shadow-lg);
   transform: translateY(-2px);
 }
 .admin-rifa-card img {
-  width max: 300px;
-  width min: auto;
+  max-width: 100%;
   max-height: 200px;
   object-fit: cover;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
 }
 
 .admin-rifa-info {
-  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 .admin-rifa-info h3 {
+  color: var(--text-light);
   margin-bottom: 8px;
-  color: #ffffff;
 }
-.admin-rifa-info p {
-  margin: 4px 0;
-  font-size: 0.9rem;
+.admin-rifa-info p,
+.admin-descripcion {
+  font-size: var(--font-size-sm);
   color: #979797;
   word-break: break-word;
 }
@@ -249,60 +244,48 @@ strong, p {
   overflow: hidden;
   text-overflow: ellipsis;
   font-style: italic;
-  color: #979797;
 }
 
-/* Botones dentro de tarjeta */
+/* Botones internos */
 .admin-rifa-btns {
   margin-top: 12px;
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  padding: 10px;
 }
-/* En HTML: 
-   <button class="btn btn-accent ver-reservas">Ver reservas</button>
-   <button class="btn btn-danger eliminar-rifa">Eliminar</button>
-   <button class="btn btn-outline editar-rifa">Editar</button>
-*/
 
 /* ===================================
-   📝 FORMULARIO DE RIFAS
+   📝 FORMULARIO DE RIFA
 =================================== */
 #form-rifa {
-  display: flex;
-  flex-direction: column;
-  background-color: rgba(22, 22, 22, 0.4);
+  background-color: var(--glass-dark);
   backdrop-filter: blur(2px);
   border: 3px solid #000;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  box-shadow: var(--shadow-sm);
   padding: 16px;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
 }
 #form-rifa input,
 #form-rifa textarea {
   background: var(--text-dark);
-  width: 100%;
-  margin-bottom: 12px;
-  padding: 10px;
-  border-radius: 4px;
-  border: 1px solid var(--text-dark);
-  font-size: 14px;
-  padding: 20px;
-  transform: var(--transition);
   color: var(--gray-light);
-}
-#form-rifa button {
-  /* reutiliza .btn en HTML */
+  font-size: var(--font-size-sm);
+  width: 100%;
+  padding: 20px 20px;
+  margin-bottom: 15px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--text-dark);
 }
 
-/* Vista previa de imagen actual */
+/* Imagen actual */
 #imagenActual {
   display: block;
   margin-bottom: 10px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--gray-medium);
   max-width: 100%;
 }
 
@@ -316,19 +299,43 @@ strong, p {
 .sin-reservas {
   text-align: center;
   margin-top: 2rem;
-  color: #ffffff;
+  color: var(--text-light);
   opacity: 0.8;
 }
 .sin-reservas img {
   max-width: 60%;
-  margin: 0 auto 20px;
   display: block;
+  margin: 0 auto 20px;
   filter: grayscale(70%);
 }
 
+.card{
+  background-color: var(--glass-dark);
+  backdrop-filter: blur(2px);
+  border: 3px solid #000;
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.card p {
+  font-size: var(--font-size-sm);
+  color: #979797;
+  word-break: break-word;
+  padding: 5px 0;
+}
+
 /* ===================================
-   🧾 DETALLE RIFA EN RESERVAS
+   🖼️ INFO RIFA SELECCIONADA
 =================================== */
+
 .detalle-rifa-admin {
   background-color: rgba(255, 255, 255, 0.05);
   padding: 1rem;
@@ -336,6 +343,65 @@ strong, p {
   border-radius: 10px;
   color: white;
 }
+
+#info-rifa-seleccionada {
+  background-color: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(2px);
+  border: 1px solid #444;
+  border-radius: var(--radius-md);
+  margin-bottom: 2rem;
+  padding: 1rem;
+}
+#info-rifa-seleccionada img {
+  max-width: 100%;
+  margin-top: 1rem;
+  border-radius:  var(--radius-sm);
+}
+
+/*BOTOTES*/
+
+.aprobar{
+  font-size: var(--font-size-sm);
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  border: 2px solid transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  text-decoration: none;
+  transition: background-color var(--transition), color var(--transition), transform var(--transition);
+  background-color: var(--green);
+  color: #fff;
+}
+
+.aprobar:hover {
+  background-color: var(--green-dark);
+  transform: translateY(-2px);
+}
+
+.rechazar {
+  font-size: var(--font-size-sm);
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  border: 2px solid transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  text-decoration: none;
+  transition: background-color var(--transition), color var(--transition), transform var(--transition);
+  background-color: var(--red);
+  color: #fff;
+}
+.rechazar:hover {
+  background-color: var(--red-dark);
+  transform: translateY(-2px);
+}
+
+/* ===================================
+   🌌 GALERÍA EXTRA / IMÁGENES SECUNDARIAS
+=================================== */
 .galeria-extra,
 #galeria-imagenes-extra {
   display: flex;
@@ -343,77 +409,84 @@ strong, p {
   gap: 10px;
   margin-top: 1rem;
 }
+
 .galeria-extra img,
 .imagen-extra {
   max-width: 150px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   border: 2px solid #333;
+  transition: transform var(--transition);
+}
+
+.galeria-extra img:hover,
+.imagen-extra:hover {
+  transform: scale(1.05);
 }
 
 /* ===================================
-   🖼️ SECCIÓN INFO RIFA
-=================================== */
-#info-rifa-seleccionada {
-  margin-bottom: 2rem;
-  padding: 1rem;
-  border-radius: 8px;
-  background-color: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(2px);
-  border: 1px solid #444;
-}
-#info-rifa-seleccionada img {
-  max-width: 100%;
-  margin-top: 1rem;
-  border-radius: 6px;
-}
-
-/* ===================================
-   📦 MODAL
+   📦 MODAL / VENTANA EMERGENTE
 =================================== */
 .modal {
   position: fixed !important;
-  top: 0; left: 0;
-  width: 100vw;
-  height: 100vh;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   pointer-events: none;
   z-index: 99999 !important;
 }
+
 .modal.visible {
   pointer-events: all;
 }
+
 .modal-overlay {
   position: absolute;
-  background: rgba(0, 0, 0, 0.5);
-  width: 100%; height: 100%;
-  top: 0; left: 0;
+  background: var(--overlay-dark);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
   z-index: 99998;
 }
+
 .modal-box {
   position: relative;
   z-index: 100000;
   background-color: rgba(20, 20, 20, 0.9);
   border: 2px solid #333;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   padding: 20px 30px;
   text-align: center;
-  color: white;
+  color: var(--text-light);
   max-width: 400px;
   width: 90%;
 }
+
 .modal-icono-container {
-  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
 }
+
 #modalMensaje {
   margin-bottom: 20px;
-  font-size: 1.1rem;
+  font-size: var(--font-size-md);
 }
+
 #modalCerrar {
-  /* usar clases .btn btn-accent en HTML */
+  font-size: var(--font-size-sm);
+  background-color: var(--blue);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color var(--transition);
 }
+
 #modalCerrar:hover {
   background-color: var(--blue-dark);
 }
-

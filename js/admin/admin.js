@@ -6,7 +6,7 @@ import { manejarFormularioRifa } from './formRifasAdmin.js';    // <-- aquí apu
 import { prepararEdicionRifa } from './editarRifa.js';
 import { cargarReservasPorRifa, aprobarReserva, rechazarReserva } from './reservasAdmin.js';
 import { mostrarFormulario, ocultarFormulario, volverAPrincipal } from './utilsAdmin.js';
-import { mostrarModal, prepararModal } from './modalAdmin.js';
+import { mostrarModal, prepararModal, mostrarModalConfirmacion } from './modalAdmin.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   prepararModal();       // 🎬 Inicializar eventos de modal

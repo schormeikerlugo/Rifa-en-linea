@@ -18,7 +18,7 @@
 
   /* 🎨 Color del modal alertas */
 
-  --modal-background:#161616
+  --modal-box:#161616
 ;
 
   /* ✍️ Tipografía y color de texto */
@@ -43,6 +43,10 @@
   --shadow-md:       0 4px 6px rgba(0, 0, 0, 0.1);
   --shadow-lg:       0 10px 15px rgba(0, 0, 0, 0.15);
   --shadow-inset:    inset 0 2px 4px rgba(0, 0, 0, 0.2);
+  
+  /* 🌑 Colores utilitarios */
+  --overlay-dark:    rgba(0, 0, 0, 0.5);
+  --glass-dark:      rgba(22, 22, 22, 0.4);
 }
 
 /* ===================================
@@ -157,7 +161,8 @@ h3 {
 .rifa-card {
   max-width: 320px;
   height: 400px;
-  background-color: #170d27;
+  background-color: var(--glass-dark);
+  backdrop-filter: blur(2px);
   border: 3px solid #000;
   border-radius: 10px;
   overflow: hidden;
@@ -165,12 +170,14 @@ h3 {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba (176, 75, 220, 50);
   transition: transform 0.2s ease;
   cursor: pointer;
 }
 .rifa-card:hover {
   transform: translateY(-5px);
+  transition: transform 0.2s ease;
+  box-shadow: 0 4px 10px rgba(176, 75, 220, 100);
 }
 .rifa-card img {
   width: 100%;
@@ -237,6 +244,7 @@ h3 {
   text-align: center;
   margin-bottom: 2rem;
   box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  max-width: 850px;
   
 }
 .info-rifa img {
@@ -296,10 +304,11 @@ h3 {
   gap: 15px;
   padding: 50px;
   margin-top: 20px;
-  background-color: rgba(68, 68, 68, 0.4);
+  background-color: var(--glass-dark);
   border: 2px solid #000;
   border-radius: 20px;
   box-shadow: inset 5px 5px 10px rgba(0,0,0,0.5);
+    max-width: 850px;
 }
 
 .numero {
@@ -386,6 +395,18 @@ background: var(--text-dark);
   }
 }
 
+input:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 5px rgba(37, 99, 235, 0.5);
+}
+
+input:hover {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 5px rgba(37, 99, 235, 0.5);
+}
+
 .btn-volver {
   width: 100%;
   padding: 12px 16px;
@@ -432,6 +453,14 @@ background: var(--text-dark);
   background-color: var(--green-dark);
   color: var(--text-light);
   transform: scale(1.02);
+}
+
+.btn-modal{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
 }
 
 /* ===================================
@@ -497,12 +526,10 @@ section{
 }
 .modal-box {
   position: relative;
-  background-color: var(--modal-background);
+  background-color: var(--modal-box);
   backdrop-filter: blur(2px);
   border: 2px solid #000;
-  box-shadow:
-    0 4px 6px rgba(0, 0, 0, 0.3),     /* sombra externa */
-    inset 5px 5px 10px rgba(0,0,0,0.5); /* sombra interna */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);     /* sombra externa */
   border-radius: 20px;
   padding: 20px 30px;
   max-width: 400px;
@@ -515,6 +542,7 @@ section{
 #modalMensaje {
   color: #fff;
   margin-bottom: 15px;
+  font-size: 1.1rem;
 }
 #modalCerrar {
   background: #007bff;
@@ -524,6 +552,8 @@ section{
   border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
+  transition: var(--transition);
+  
 }
 #modalCerrar:hover {
   background: #0056b3;
@@ -537,7 +567,7 @@ section{
   display: none;
   position: fixed;
   inset: 0;
-  background-color: rgba(0,0,0,0.8);
+  background-color: var(--modal-box);
   display: none;
   align-items: center;
   justify-content: center;
@@ -557,7 +587,7 @@ section{
   top: 20px;
   right: 30px;
   font-size: 2rem;
-  color: white;
+  color: var(--text-light);
   text-decoration: none;
   font-weight: bold;
   z-index: 100000;
@@ -568,7 +598,7 @@ section{
 
 .imagen-extra img {
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: var(--transition);
 }
 .imagen-extra img:hover {
   transform: scale(1.05);

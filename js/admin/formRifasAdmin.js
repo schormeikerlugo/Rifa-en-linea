@@ -16,7 +16,7 @@ export function manejarFormularioRifa(formRifa) {
     const extrasFiles = formRifa.imagenesExtra.files;
 
     if (!titulo || !descripcion || !fechaInicio || !fechaFin) {
-      mostrarModal('⚠️ Completa todos los campos.', 'advertencia');
+      mostrarModal('Completa todos los campos.', 'info'); //⚠️
       return;
     }
 
@@ -25,7 +25,7 @@ export function manejarFormularioRifa(formRifa) {
     if (imagenFile) {
       const path = `rifas/${Date.now()}_${imagenFile.name}`;
       const { error: upErr } = await supabase.storage.from('comprobantes').upload(path, imagenFile);
-      if (upErr) { mostrarModal('❌ Error al subir imagen.', 'error'); return; }
+      if (upErr) { mostrarModal('Error al subir imagen.', 'error'); return; } //❌
       imagenUrl = supabase.storage.from('comprobantes').getPublicUrl(path).data.publicUrl;
     }
 
@@ -35,7 +35,7 @@ export function manejarFormularioRifa(formRifa) {
       for (const file of extrasFiles) {
         const path = `rifas/extras/${Date.now()}_${file.name}`;
         const { error: err } = await supabase.storage.from('comprobantes').upload(path, file);
-        if (err) { mostrarModal(`❌ Error al subir extra ${file.name}`, 'error'); return; }
+        if (err) { mostrarModal(`Error al subir extra ${file.name}`, 'error'); return; } //❌
         extrasUrls.push(supabase.storage.from('comprobantes').getPublicUrl(path).data.publicUrl);
       }
     }
@@ -48,13 +48,13 @@ export function manejarFormularioRifa(formRifa) {
     if (id) {
       // ✏️ Editar
       const { error } = await supabase.from('rifas').update(payload).eq('id', id);
-      if (error) { mostrarModal('❌ No se pudo actualizar.', 'error'); return; }
-      mostrarModal('✅ Rifa actualizada.', 'exito');
+      if (error) { mostrarModal('No se pudo actualizar.', 'error'); return; } //❌
+      mostrarModal('Rifa actualizada con exito.', 'aprobado'); //✅
     } else {
       // 🆕 Crear
-      if (!imagenUrl) { mostrarModal('❌ Debes subir imagen principal.', 'error'); return; }
+      if (!imagenUrl) { mostrarModal('Debes subir imagen principal.', 'info'); return; }//❌
       const { data, error } = await supabase.from('rifas').insert([payload]).select().single();
-      if (error || !data) { mostrarModal('❌ No se creó la rifa.', 'error'); return; }
+      if (error || !data) { mostrarModal('No se creó la rifa.', 'error'); return; } //❌
       await generarNumerosParaRifa(data.id, parseInt(formRifa.cantidad_numeros.value));
     }
 
@@ -80,7 +80,7 @@ async function generarNumerosParaRifa(rifaId, cantidad) {
       rifa_id: rifaId
     }));
     const { error } = await supabase.from('numeros').insert(nums);
-    if (error) { mostrarModal(`❌ Error bloque ${b+1}`, 'error'); return; }
+    if (error) { mostrarModal(`Error bloque ${b+1}`, 'error'); return; } //❌
   }
-  mostrarModal(`🎉 Creada con ${cantidad} números.`, 'exito');
+  mostrarModal(`Felicidades has creado tu rifa con ${cantidad} números.`, 'enviado'); 
 }

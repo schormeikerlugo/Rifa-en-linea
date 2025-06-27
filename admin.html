@@ -13,66 +13,58 @@
 </head>
 <body>
 
-  <!-- ──────────────────────────────────────────────────────── -->
-  <!-- 🔷 TÍTULO PRINCIPAL -->
+  <!-- ════════════════════════════════════════════════════════ -->
+  <!-- 🔷 ENCABEZADO PRINCIPAL -->
   <header>
     <h1>Panel de Administración</h1>
   </header>
 
-  <!-- ──────────────────────────────────────────────────────── -->
-  <!-- 🔹 ACCIONES GLOBALES -->
+  <!-- ════════════════════════════════════════════════════════ -->
+  <!-- 🔹 ACCIONES GENERALES -->
   <section id="acciones-admin">
-    <!-- Botón para crear nueva rifa -->
     <button id="btn-crear" class="btn btn-accent">
       ➕ Crear nueva rifa
     </button>
   </section>
 
-  <!-- Botón para volver (invisible al inicio) -->
-  <button id="btn-volver" class="btn btn-neutral oculto">
-    ⬅ Volver
-  </button>
-
-  <!-- ──────────────────────────────────────────────────────── -->
-  <!-- 🔷 SECCIÓN: Formulario de creación/edición de rifa -->
+  <!-- ════════════════════════════════════════════════════════ -->
+  <!-- 📋 FORMULARIO DE CREACIÓN/EDICIÓN -->
   <section id="seccion-formulario" class="oculto">
     <form id="form-rifa">
-      <!-- Hidden para edición -->
+
+      <!-- 🆔 ID OCULTO PARA EDICIÓN -->
       <input type="hidden" id="rifa_id">
 
-      <!-- Título -->
+      <!-- 🏷️ Título -->
       <input
         type="text"
         id="titulo"
         placeholder="Título de la rifa"
-        required
         class="input-text"
       >
 
-      <!-- Descripción -->
+      <!-- 📝 Descripción -->
       <textarea
         id="descripcion"
         placeholder="Descripción de la rifa"
-        required
         class="input-textarea"
       ></textarea>
 
-      <!-- Fecha y hora -->
-      <input type="datetime-local" id="fecha_inicio" required class="input-datetime">
-      <input type="datetime-local" id="fecha_fin"    required class="input-datetime">
+      <!-- 🗓️ Fecha y hora -->
+      <input type="datetime-local" id="fecha_inicio" class="input-datetime">
+      <input type="datetime-local" id="fecha_fin" class="input-datetime">
 
-      <!-- Cantidad de números -->
+      <!-- 🔢 Cantidad de números -->
       <input
         type="number"
         id="cantidad_numeros"
         min="1"
-        max="5000"
-        required
+        max="1000"
         placeholder="Máximo 1000 números"
         class="input-number"
       >
 
-      <!-- Imagen principal -->
+      <!-- 🖼️ Imagen principal -->
       <label for="imagen_rifa">Imagen principal:</label>
       <input
         type="file"
@@ -81,7 +73,7 @@
         class="input-file"
       >
 
-      <!-- Imágenes adicionales -->
+      <!-- 🖼️ Imágenes adicionales -->
       <label for="imagenesExtra">Imágenes adicionales (máx 5):</label>
       <input
         type="file"
@@ -91,54 +83,54 @@
         class="input-file"
       >
 
-      <!-- Botón de guardar -->
-      <button type="submit" class="btn btn-accent">
-        Guardar Rifa
-      </button>
+      <!-- 💾 Botón de guardar -->
+      <button type="submit" class="btn btn-accent">Guardar Rifa</button>
     </form>
   </section>
 
-  <!-- ──────────────────────────────────────────────────────── -->
-  <!-- 🔷 SECCIÓN: Vista Principal (lista de rifas) -->
+  <!-- ════════════════════════════════════════════════════════ -->
+  <!-- 🎴 VISTA DE RIFAS EXISTENTES -->
   <section id="seccion-principal" class="visible">
     <section id="lista-rifas" class="grid-cards"></section>
   </section>
 
-
-
-<!-- ──────────────────────────────────────────────────────── -->
-<!-- 🔷 Template para tarjeta de rifa -->
-<template id="rifa-card-template">
-  <div class="admin-rifa-card">
-    <img src="" alt="Imagen de la rifa">
-    <div class="admin-rifa-info">
-      <!-- Estos selectores deben coincidir con tu JS -->
-      <h3 class="rifa-titulo"></h3>
-      <p class="rifa-descripcion"></p>
-      <p><strong>Inicio:</strong> <span class="rifa-fecha-inicio"></span></p>
-      <p><strong>Fin:</strong>    <span class="rifa-fecha-fin"></span></p>
-<div class="admin-rifa-btns">
-  <button class="btn btn-accent ver-reservas" data-id="${rifa.id}">Ver reservas</button>
-  <button class="btn btn-danger eliminar-rifa" data-id="${rifa.id}">Eliminar</button>
-  <button class="btn btn-outline editar-rifa" data-id="${rifa.id}">Editar</button>
-</div>
-
+  <!-- ════════════════════════════════════════════════════════ -->
+  <!-- 🧩 TEMPLATE DE TARJETA DE RIFA -->
+  <template id="rifa-card-template">
+    <div class="admin-rifa-card">
+      <img src="" alt="Imagen de la rifa">
+      <div class="admin-rifa-info">
+        <h3 class="rifa-titulo"></h3>
+        <p class="rifa-descripcion"></p>
+        <p><strong>Inicio:</strong> <span class="rifa-fecha-inicio"></span></p>
+        <p><strong>Fin:</strong> <span class="rifa-fecha-fin"></span></p>
+        <div class="admin-rifa-btns">
+          <button class="btn btn-accent ver-reservas">Ver reservas</button>
+          <button class="btn btn-danger eliminar-rifa">Eliminar</button>
+          <button class="btn btn-outline editar-rifa">Editar</button>
+        </div>
+      </div>
     </div>
-  </div>
-</template>
+  </template>
 
-  <!-- ──────────────────────────────────────────────────────── -->
-  <!-- 🔷 SECCIÓN: Info de rifa y filtros de reservas -->
+  <!-- ════════════════════════════════════════════════════════ -->
+  <!-- 🧾 FILTROS DE RESERVAS -->
   <aside id="filtrosReservas" class="oculto filtros">
     <button class="btn btn-filter filtro" data-filtro="pendiente">Pendientes</button>
     <button class="btn btn-filter filtro" data-filtro="confirmado">Aprobadas</button>
     <button class="btn btn-filter filtro" data-filtro="todas">Todas</button>
   </aside>
 
+  <!-- 📋 LISTA DE RESERVAS -->
   <section id="lista-reservas" class="oculto grid-reservas"></section>
 
-  <!-- ──────────────────────────────────────────────────────── -->
-  <!-- 🔷 MODAL: Mensajes visuales -->
+  <!-- 🔙 BOTÓN DE VOLVER -->
+  <button id="btn-volver" class="btn btn-neutral oculto">
+    ⬅ Volver
+  </button>
+
+  <!-- ════════════════════════════════════════════════════════ -->
+  <!-- 💬 MODAL DE MENSAJES -->
   <div id="modalCustom" class="modal oculto" data-type="info">
     <div class="modal-overlay"></div>
     <div class="modal-box">
@@ -153,16 +145,16 @@
         ></dotlottie-player>
       </div>
       <p id="modalMensaje">Aquí va el mensaje</p>
-      <button id="modalCerrar" class="btn btn-accent">Cerrar</button>
+      <div class="btn-modal">
+        <button id="modalCerrar" class="btn btn-accent">Cerrar</button>  
+      </div>
     </div>
   </div>
 
-  <!-- ──────────────────────────────────────────────────────── -->
-  <!-- 🔷 SCRIPT PRINCIPAL -->
+  <!-- ════════════════════════════════════════════════════════ -->
+  <!-- 🔧 SCRIPT PRINCIPAL -->
   <script type="module" src="js/admin/admin.js"></script>
 </body>
-</html>
-
 </html>
 
 

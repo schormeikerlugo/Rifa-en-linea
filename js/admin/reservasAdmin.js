@@ -1,6 +1,6 @@
 // js/admin/reservasAdmin.js
 import { supabase } from './supabaseClient.js'
-import { mostrarModal } from './modalAdmin.js'
+import { mostrarModal, mostrarModalConfirmacion } from './modalAdmin.js'
 import { mostrarInfoDeRifa } from './helpersAdmin.js'
 
 /* 🔁 Cargar reservas y mostrar info de rifa */
@@ -38,12 +38,12 @@ export async function cargarReservasPorRifa(rifaId, filtro = 'pendiente') {
   const { data, error } = await query
 
   if (error) {
-    mostrarModal('❌ Error al cargar reservas.', 'error')
+    mostrarModal('❌ Error al cargar reservas.', 'error') //
     return
   }
 
   if (!data.length) {
-    contenedor.innerHTML += '<p class="mensaje-final">No hay reservas disponibles.</p>'
+    contenedor.innerHTML +=  '<p class="mensaje-final">No hay reservas disponibles.</p>'
     return
   }
 
@@ -52,11 +52,12 @@ export async function cargarReservasPorRifa(rifaId, filtro = 'pendiente') {
     const div = document.createElement('div')
     div.className = 'card'
     div.innerHTML = `
-      <p><strong>Número:</strong> ${reserva.numero}</p>
-      <p><strong>Nombre:</strong> ${reserva.nombre_cliente || '-'}</p>
-      <p><strong>Teléfono:</strong> ${reserva.telefono_cliente || '-'}</p>
-      <p><strong>Estado:</strong> ${reserva.estado}</p>
-      <a href="${reserva.comprobante_url}" target="_blank">Ver comprobante</a>
+      <p><strong>🪙 Número:</strong> ${reserva.numero}</p>
+      <p><strong>👤 Nombre:</strong> ${reserva.nombre_cliente || '-'}</p>
+      <p><strong>📱 Teléfono:</strong> ${reserva.telefono_cliente || '-'}</p>
+      <p><strong>📩 Correo:</strong> ${reserva.correo_cliente || '-'}</p>
+      <p><strong>📍 Estado:</strong> ${reserva.estado}</p>
+      <a href="${reserva.comprobante_url}" target="_blank">🔗 Ver comprobante</a>
       ${reserva.estado === 'pendiente' ? `
         <div class="admin-rifa-btns">
           <button class="aprobar" data-id="${reserva.id}">✅ Aprobar</button>
@@ -74,7 +75,7 @@ export async function cargarReservasPorRifa(rifaId, filtro = 'pendiente') {
 
 /* ✅ Aprobar reserva */
 export async function aprobarReserva(id) {
-  const confirmar = confirm('¿Estás seguro que deseas aprobar esta reserva?')
+  const confirmar = await mostrarModalConfirmacion ('¿Estás seguro que deseas aprobar esta reserva?', 'enviado', 'aprobar')
   if (!confirmar) return false
 
   const { error } = await supabase
@@ -83,17 +84,17 @@ export async function aprobarReserva(id) {
     .eq('id', id)
 
   if (error) {
-    mostrarModal('❌ Error al aprobar la reserva.', 'error')
+    mostrarModal('Error al aprobar la reserva.', 'error') //❌
     return false
   }
 
-  mostrarModal('✅ Reserva aprobada correctamente.', 'exito')
+  mostrarModal('Reserva aprobada correctamente.', 'aprobado') //✅
   return true
 }
 
 /* 🗑️ Rechazar reserva */
 export async function rechazarReserva(id) {
-  const confirmar = confirm('¿Estás seguro que deseas rechazar esta reserva y liberar el número?')
+  const confirmar = await mostrarModalConfirmacion ('¿Estás seguro que deseas rechazar esta reserva y liberar el número?', 'advertencia', 'rechazar')
   if (!confirmar) return false
 
   const { error } = await supabase
@@ -109,10 +110,10 @@ export async function rechazarReserva(id) {
     .eq('id', id)
 
   if (error) {
-    mostrarModal('❌ Error al rechazar la reserva.', 'error')
+    mostrarModal('Error al rechazar la reserva.', 'error') //❌
     return false
   }
 
-  mostrarModal('ℹ️ Reserva rechazada y número liberado.', 'info')
+  mostrarModal('ℹ️ Reserva rechazada y número liberado.', 'aprobado') //ℹ️
   return true
 }
