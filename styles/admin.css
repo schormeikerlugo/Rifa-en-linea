@@ -414,8 +414,8 @@ strong, p {
 .imagen-extra {
   max-width: 150px;
   border-radius: var(--radius-sm);
-  border: 2px solid #333;
   transition: transform var(--transition);
+  object-fit: contain;
 }
 
 .galeria-extra img:hover,
