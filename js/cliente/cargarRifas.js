@@ -31,25 +31,48 @@ export async function cargarRifas() {
 
   contenedor.innerHTML = '';
 
-  data.forEach(rifa => {
-    const card = document.createElement('div');
-    card.classList.add('rifa-card');
-    card.innerHTML = `
-      <img src="${rifa.imagen_url || 'https://via.placeholder.com/300x150'}" alt="${rifa.titulo}">
-      <div class="rifa-info">
-        <h3 class="rifa-titulo">${rifa.titulo}</h3>
-        <p class="fecha_inicio">📅 <strong>Inicio:</strong> ${formatearFecha(rifa.fecha_inicio)}</p>
-        <p class="fecha_fin">📅 <strong>Fin:</strong> ${formatearFecha(rifa.fecha_fin)}</p>
-        <p class="rifa-descripcion">${rifa.descripcion || ''}</p>
-      </div>
-    `;
+data.forEach(rifa => {
+  const card = document.createElement('div');
+  card.classList.add('rifa-card');
 
-    // ✅ Pasamos id y objeto completo
-    card.addEventListener('click', () => {
-      mostrarNumerosPorRifa(rifa.id, rifa);
-      mostrarSeccion('numerosSection');
-    });
+  // Imagen
+  const img = document.createElement('img');
+  img.src = rifa.imagen_url || 'https://via.placeholder.com/300x150';
+  img.alt = rifa.titulo;
 
-    contenedor.appendChild(card);
+  // Info
+  const infoDiv = document.createElement('div');
+  infoDiv.classList.add('rifa-info');
+
+  const titulo = document.createElement('h3');
+  titulo.classList.add('rifa-titulo');
+  titulo.textContent = rifa.titulo;
+
+  const fechaInicio = document.createElement('p');
+  fechaInicio.classList.add('fecha_inicio');
+  fechaInicio.innerHTML = `📅 <strong>Inicio:</strong> ${formatearFecha(rifa.fecha_inicio)}`;
+
+  const fechaFin = document.createElement('p');
+  fechaFin.classList.add('fecha_fin');
+  fechaFin.innerHTML = `📅 <strong>Fin:</strong> ${formatearFecha(rifa.fecha_fin)}`;
+
+  const descripcion = document.createElement('p');
+  descripcion.classList.add('rifa-descripcion');
+  descripcion.textContent = rifa.descripcion || '';
+
+  infoDiv.appendChild(titulo);
+  infoDiv.appendChild(fechaInicio);
+  infoDiv.appendChild(fechaFin);
+  infoDiv.appendChild(descripcion);
+
+  card.appendChild(img);
+  card.appendChild(infoDiv);
+
+  card.addEventListener('click', () => {
+    mostrarNumerosPorRifa(rifa.id, rifa);
+    mostrarSeccion('numerosSection');
   });
+
+  contenedor.appendChild(card);
+});
 }

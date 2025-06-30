@@ -3,6 +3,13 @@ import { supabase } from './supabaseClient.js'
 import { mostrarModal, mostrarModalConfirmacion } from './modalAdmin.js'
 import { mostrarInfoDeRifa } from './helpersAdmin.js'
 
+// Función para escapar HTML y evitar XSS
+function escapeHTML(str) {
+  return String(str ?? '').replace(/[&<>"']/g, s => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[s]));
+}
+
 /* 🔁 Cargar reservas y mostrar info de rifa */
 export async function cargarReservasPorRifa(rifaId, filtro = 'pendiente') {
   const contenedor = document.getElementById('lista-reservas')
@@ -48,24 +55,24 @@ export async function cargarReservasPorRifa(rifaId, filtro = 'pendiente') {
   }
 
   // 📄 Mostrar reservas
-  data.forEach(reserva => {
-    const div = document.createElement('div')
-    div.className = 'card'
-    div.innerHTML = `
-      <p><strong>🪙 Número:</strong> ${reserva.numero}</p>
-      <p><strong>👤 Nombre:</strong> ${reserva.nombre_cliente || '-'}</p>
-      <p><strong>📱 Teléfono:</strong> ${reserva.telefono_cliente || '-'}</p>
-      <p><strong>📩 Correo:</strong> ${reserva.correo_cliente || '-'}</p>
-      <p><strong>📍 Estado:</strong> ${reserva.estado}</p>
-      <a href="${reserva.comprobante_url}" target="_blank">🔗 Ver comprobante</a>
-      ${reserva.estado === 'pendiente' ? `
-        <div class="admin-rifa-btns">
-          <button class="aprobar" data-id="${reserva.id}">✅ Aprobar</button>
-          <button class="rechazar" data-id="${reserva.id}">🗑️ Rechazar</button>
-        </div>
-      ` : ''}
-    `
-    contenedor.appendChild(div)
+data.forEach(reserva => {
+  const div = document.createElement('div')
+  div.className = 'card'
+  div.innerHTML = `
+    <p><strong>🪙 Número:</strong> ${escapeHTML(reserva.numero)}</p>
+    <p><strong>👤 Nombre:</strong> ${escapeHTML(reserva.nombre_cliente) || '-'}</p>
+    <p><strong>📱 Teléfono:</strong> ${escapeHTML(reserva.telefono_cliente) || '-'}</p>
+    <p><strong>📩 Correo:</strong> ${escapeHTML(reserva.correo_cliente) || '-'}</p>
+    <p><strong>📍 Estado:</strong> ${escapeHTML(reserva.estado)}</p>
+    <a href="${escapeHTML(reserva.comprobante_url)}" target="_blank">🔗 Ver comprobante</a>
+    ${reserva.estado === 'pendiente' ? `
+      <div class="admin-rifa-btns">
+        <button class="aprobar" data-id="${escapeHTML(reserva.id)}">✅ Aprobar</button>
+        <button class="rechazar" data-id="${escapeHTML(reserva.id)}">🗑️ Rechazar</button>
+      </div>
+    ` : ''}
+  `
+  contenedor.appendChild(div)
   })
 
   // 📌 Guardar contexto

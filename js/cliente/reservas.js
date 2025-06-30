@@ -1,4 +1,3 @@
-// public/js/reservas.js
 import { client } from './supabaseClient.js';
 import { mostrarElemento, ocultarElemento, actualizarTexto, resetearFormulario, mostrarSeccion } from './uiHelpers.js';
 import { mostrarModal } from './modal.js';
@@ -17,6 +16,15 @@ export function mostrarFormularioReserva(num, rifaId) {
   form.scrollIntoView({ behavior: 'smooth' });
 }
 
+// Funciones de validación
+function validarEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function validarTelefono(telefono) {
+  return /^\d{7,15}$/.test(telefono); // Ajusta según tu país
+}
+
 document.getElementById('btnConfirmar').addEventListener('click', async () => {
   const nombre = document.getElementById('nombre').value.trim();
   const correo = document.getElementById('correo').value.trim();
@@ -25,6 +33,20 @@ document.getElementById('btnConfirmar').addEventListener('click', async () => {
 
   if (!nombre || !correo || !telefono || !archivo || !numeroSel || !rifaSel) {
     return mostrarModal('Completa todos los campos obligatorios.', 'advertencia');
+  }
+
+  if (!validarEmail(correo)) {
+    return mostrarModal('Correo electrónico inválido.', 'advertencia');
+  }
+
+  if (!validarTelefono(telefono)) {
+    return mostrarModal('Teléfono inválido. Solo números, entre 7 y 15 dígitos.', 'advertencia');
+  }
+
+  // Validación de tipo y tamaño de archivo
+  const tiposPermitidos = ['image/png', 'image/jpeg', 'application/pdf'];
+  if (!tiposPermitidos.includes(archivo.type) || archivo.size > 2 * 1024 * 1024) {
+    return mostrarModal('Archivo no permitido o demasiado grande (máx 2MB). Solo JPG, PNG o PDF.', 'advertencia');
   }
 
   const path = `${numeroSel}_${Date.now()}_${archivo.name}`;
@@ -61,7 +83,7 @@ document.getElementById('btnConfirmar').addEventListener('click', async () => {
 
   if (updErr) return mostrarModal('No se pudo realizar la reserva.', 'error');
 
-  mostrarModal('✅ ¡Reserva enviada! Te notificaremos cuando tu comprobante sea verificado.', 'exito');
+  mostrarModal('¡Reserva enviada! Te notificaremos cuando tu comprobante sea verificado.', 'exito');
 
   numeroSel = null;
   rifaSel = null;
@@ -69,20 +91,15 @@ document.getElementById('btnConfirmar').addEventListener('click', async () => {
   ocultarElemento('#formularioReserva');
   mostrarElemento('#rifasSection');
   await cargarRifas(); // Recargar las rifas para reflejar el cambio
-  window.scrollTo({ top: 0, behavior: 'smooth' }); // Llevar
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
 // ✅ Botón para volver a seleccionar un número
 document.getElementById('formVolver').addEventListener('click', async () => {
-  // 🧹 Ocultar y limpiar formulario
   resetearFormulario('#formularioReserva');
   ocultarElemento('#formularioReserva');
-
-  // 🧹 Limpiar el contenedor de números
   const cont = document.getElementById('numerosContainer');
   cont.innerHTML = '';
-
-  // 🔁 Volver a cargar los números de la rifa actual
   if (rifaSel) {
     await mostrarNumerosPorRifa(rifaSel);
     mostrarSeccion('numerosSection');

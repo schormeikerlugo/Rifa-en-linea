@@ -1,6 +1,7 @@
 // js/admin/helpersAdmin.js
 import { mostrarElemento, ocultarElemento } from './uiAdminHelpers.js'
 
+
 /* 📝 Mostrar formulario con datos de una rifa (modo edición) */
 export function mostrarFormularioEdicion(rifa) {
   const form = document.getElementById('form-rifa')
@@ -62,12 +63,12 @@ export function mostrarInfoDeRifa(rifa) {
 
   const infoRifaHtml = `
     <div class="detalle-rifa-admin">
-      <h2>${rifa.titulo}</h2>
-      <p>${rifa.descripcion}</p>
+      <h2>${escapeHTML(rifa.titulo)}</h2>
+      <p>${escapeHTML(rifa.descripcion)}</p>
       <p><strong>Inicio:</strong> ${new Date(rifa.fecha_inicio).toLocaleString()}</p>
       <p><strong>Fin:</strong> ${new Date(rifa.fecha_fin).toLocaleString()}</p>
       <div class="galeria-extra">
-        ${rifa.imagenes_extra?.map(url => `<img src="${url}" alt="extra">`).join('') || ''}
+        ${Array.isArray(rifa.imagenes_extra) ? rifa.imagenes_extra.map(url => `<img src="${escapeHTML(url)}" alt="extra">`).join('') : ''}
       </div>
     </div>
   `
