@@ -1,3 +1,4 @@
+import { cargarRifas } from './rifasAdmin.js';
 import { mostrarElemento, ocultarElemento } from './uiAdminHelpers.js';
 
 /**
@@ -51,3 +52,45 @@ export function volverAPrincipal() {
   ocultarElemento('#btn-volver');
   ocultarElemento('#filtrosReservas');
 }
+
+export function escapeHTML(str) {
+  if (typeof str !== 'string') return str;
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+/**
+ * Resetea el formulario de rifa a su estado inicial.
+ */
+export function resetearFormularioRifa(formRifa) {
+  formRifa.reset();
+
+  Array.from(formRifa.elements).forEach(el => {
+    if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
+      el.value = "";
+    } else if (el.tagName === "SELECT") {
+      el.selectedIndex = 0;
+    }
+  });
+
+  // Restaurar campo de cantidad de números
+  formRifa.cantidad_numeros.disabled = false;
+  formRifa.cantidad_numeros.value = "";
+
+  // Limpiar dataset
+  delete formRifa.dataset.editando;
+  delete formRifa.dataset.rifaId;
+  delete formRifa.dataset.imagenActual;
+  delete formRifa.dataset.imagenesExtrasActuales;
+
+  // 🧽 Limpiar imagen principal
+  document.getElementById('imagenActual')?.remove();
+
+  // 🧽 Limpiar imágenes extra
+  document.querySelector("#contenedor-imagenes-extras")?.replaceChildren();
+}
+

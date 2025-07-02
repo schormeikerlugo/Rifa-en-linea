@@ -2,27 +2,32 @@
 // Punto de entrada principal del panel de administración
 
 import { cargarRifas } from './rifasAdmin.js';
-import { manejarFormularioRifa } from './formRifasAdmin.js';    // <-- aquí apuntamos al archivo correcto
-import { prepararEdicionRifa } from './editarRifa.js';
+import { manejarFormularioRifa } from './formRifasAdmin.js';
 import { cargarReservasPorRifa, aprobarReserva, rechazarReserva } from './reservasAdmin.js';
-import { mostrarFormulario, ocultarFormulario, volverAPrincipal } from './utilsAdmin.js';
-import { mostrarModal, prepararModal, mostrarModalConfirmacion } from './modalAdmin.js';
+import { mostrarFormulario, ocultarFormulario, volverAPrincipal, resetearFormularioRifa } from './utilsAdmin.js';
+import { prepararModal } from './modalAdmin.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   prepararModal();       // 🎬 Inicializar eventos de modal
   cargarRifas();         // 🚀 Cargar rifas al inicio
 
+  // Manejo del formulario
+  const formRifa = document.getElementById('form-rifa');
+
   // Crear nueva rifa
-  document.getElementById('btn-crear')?.addEventListener('click', mostrarFormulario);
+  document.getElementById('btn-crear')?.addEventListener('click', () => {  
+    mostrarFormulario();
+    resetearFormularioRifa(formRifa);
+  });
 
   // Botón volver
   document.getElementById('btn-volver')?.addEventListener('click', () => {
     ocultarFormulario();
     volverAPrincipal();
+    resetearFormularioRifa(formRifa);
   });
 
   // Manejo de formulario rifa
-  const formRifa = document.getElementById('form-rifa');
   if (formRifa) manejarFormularioRifa(formRifa);
 
   // Filtros de reservas
@@ -34,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Eventos delegados para reservas
+  // Eventos delegados para aprobar/rechazar reservas
   const lista = document.getElementById('lista-reservas');
   if (lista) {
     lista.addEventListener('click', async e => {
@@ -46,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const ok = await aprobarReserva(btn.dataset.id);
         if (ok) await cargarReservasPorRifa(rifaId, filtroActual);
       }
+
       if (btn.matches('.rechazar')) {
         const ok = await rechazarReserva(btn.dataset.id);
         if (ok) await cargarReservasPorRifa(rifaId, filtroActual);

@@ -1,33 +1,37 @@
 // uiAdminHelpers.js
 
 export function mostrarElemento(selector) {
-  const el = document.querySelector(selector);
+  const el = typeof selector === 'string' ? document.querySelector(selector) : selector;
   if (el) {
     el.classList.add('transicion', 'visible');
     el.classList.remove('oculto');
     el.style.display = 'block';
 
-    // Espera una renderización antes de forzar la animación
     requestAnimationFrame(() => {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
-    document.body.style.overflow = calcularOverflow() ? 'auto' : 'hidden';
+    // ✅ Solo permitir scroll si el contenido lo requiere
+    ajustarOverflowGlobal();
   }
 }
 
 export function ocultarElemento(selector) {
-  const el = document.querySelector(selector);
+  const el = typeof selector === 'string' ? document.querySelector(selector) : selector;
   if (el) {
     el.classList.add('transicion', 'oculto');
     el.classList.remove('visible');
     setTimeout(() => {
       el.style.display = 'none';
-      document.body.style.overflow = calcularOverflow() ? 'auto' : 'hidden';
+      ajustarOverflowGlobal();
     }, 300);
   }
 }
 
-function calcularOverflow() {
-  return [...document.querySelectorAll('.visible')].some(el => el.scrollHeight > window.innerHeight);
+// 🔁 Verifica si hay algún elemento visible con scroll
+function ajustarOverflowGlobal() {
+  const tieneContenidoDesbordado = [...document.querySelectorAll('.visible')]
+    .some(el => el.scrollHeight > window.innerHeight);
+
+
 }

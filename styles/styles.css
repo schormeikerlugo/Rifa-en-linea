@@ -156,6 +156,7 @@ h3 {
   justify-content: center;
   gap: 20px;
   margin-top: 20px;
+
 }
 
 .rifa-card {
@@ -195,6 +196,9 @@ h3 {
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
+    
+    overflow-wrap: break-word;
+  white-space: normal;
 }
 .rifa-info::-webkit-scrollbar {
   display: none;
@@ -212,6 +216,9 @@ h3 {
   color: #979797;
   margin-bottom: 10px;
   font-size: 0.9rem;
+    
+    overflow-wrap: break-word;
+  white-space: normal;
 }
 .rifa-info .fecha_inicio {
   text-align: center;

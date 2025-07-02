@@ -14,6 +14,7 @@ export function manejarFormularioRifa(formRifa) {
     const fechaFin = formRifa.fecha_fin.value;
     const imagenFile = formRifa.imagen_rifa.files[0];
     const extrasFiles = formRifa.imagenesExtra.files;
+    
 
     if (!titulo || !descripcion || !fechaInicio || !fechaFin) {
       mostrarModal('Completa todos los campos.', 'info'); //⚠️
@@ -57,15 +58,6 @@ export function manejarFormularioRifa(formRifa) {
       if (error || !data) { mostrarModal('No se creó la rifa.', 'error'); return; } //❌
       await generarNumerosParaRifa(data.id, parseInt(formRifa.cantidad_numeros.value));
     }
-
-    // Reset
-    formRifa.reset();
-    delete formRifa.dataset.editando;
-    delete formRifa.dataset.rifaId;
-    delete formRifa.dataset.imagenActual;
-    delete formRifa.dataset.imagenesExtrasActuales;
-    ocultarFormulario();
-    cargarRifas();
   });
 }
 
