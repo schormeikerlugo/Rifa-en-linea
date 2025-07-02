@@ -46,7 +46,7 @@
   
   /* 🌑 Colores utilitarios */
   --overlay-dark:    rgba(0, 0, 0, 0.5);
-  --glass-dark:      rgba(22, 22, 22, 0.4);
+  --glass-dark:      rgba(22, 22, 22, 0.);
 }
 
 /* ===================================
@@ -56,6 +56,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: var(--font-base);
 }
 
 html, body {
@@ -75,20 +76,22 @@ body.no-scroll {
 }
 
 body {
+  background-color: #090116;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: #060010;
-  background-image: radial-gradient(circle, #222224 2%, transparent 6%);
-  background-size: 40px 40px;
-  background-repeat: repeat;
-  background-position: center;
+  width: 100%;
+  max-width: 1600px;
+  margin: auto;
+  padding: 2rem;
   font-family: var(--font-base);
   color: var(--text-light);
-  padding: 2rem;
+  background-image: radial-gradient(circle, #222224 2%, transparent 6%);
+  background-size: 40px 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   overflow-x: hidden !important;
+  box-sizing: border-box;
 }
 
 .oculto {
@@ -114,6 +117,58 @@ body {
   transition: opacity var(--transition), transform var(--transition), visibility var(--transition);
 }
 
+/* ===================================
+   🌟 animacion de fondo
+=================================== */
+
+.sky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.shooting-star {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  width: 2px;
+  height: 100px;
+  background: linear-gradient(-45deg, white, rgba(255, 255, 255, 0));
+  animation: shoot 5s linear infinite;
+  opacity: 0;
+}
+
+@keyframes shoot {
+  0% {
+    transform: translateX(0) translateY(0) rotate(45deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-1000px) translateY(1000px) rotate(45deg);
+    opacity: 0;
+  }
+}
+
+.shooting-star:nth-child(2) {
+  animation-delay: 1s;
+  left: 70%;
+}
+.shooting-star:nth-child(3) {
+  animation-delay: 2s;
+  left: 30%;
+}
+.shooting-star:nth-child(4) {
+  animation-delay: 3s;
+  left: 80%;
+}
+
 
 /* ===================================
    💠 ENCABEZADOS Y TITULARES
@@ -121,35 +176,92 @@ body {
 
 .tituloPrincipal {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  text-align: center;
   font-weight: bold;
+    padding: 1rem;
+  background-color: var(--glass-dark);
+  backdrop-filter: blur(2px);
+  border-radius: var(--radius-md);
+  border: 3px solid #000;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 2rem;  
   color: var(--text-light);
   text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-  margin-bottom: 60px;
+  width: 100%;
+  max-width: 100%;
+  background-color: var(--modal-box);
+  gap: 20px; 
 }
-.tituloPrincipal img {
-  width: 150px;
-  margin-bottom: 10px;
-}
-h1 {
-  font-size: 2.5rem;
+
+.tituloPrincipal h1 {
+  font-size: 1.5rem;
   color: #d333be;
-  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+
+  @media screen and (max-width: 600px) {
+  display: none; /* Ocultar en pantallas pequeñas */    
+  }
 }
-h2, h3 {
-  color: var(--text-light);
-  text-align: center;
-  margin-bottom: 20px;
+
+.tituloPrincipal img {
+  margin-left: 15px;
+  width: 70px;
+  height: 100%;
+  margin-bottom: 10px;
+  align-items: center;
+  margin-top: 10px;
 }
-h3 {
-  text-align: left;
+
+.btn-header {
+  position: absolute;
+  right: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  margin-right: 20px;
+}
+
+.btn-info {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: var(--font-size-sm);
+  font-weight: bold;
+  color: var(--gray-dark);
+  background-color: transparent;
+  border: 2px solid var(--gray-dark);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: background-color var(--transition), color var(--transition), transform var(--transition);
+  box-shadow: none;
+  text-decoration: none;
+  
+}
+.btn-info:hover {
+  background: linear-gradient(90deg, var(--gray-light), var(--gray-medium));
+  color: var(--text-dark);
+  transform: scale(1.02);
+}
+
+.btn-info:active {
+  transform: scale(0.98);
 }
 
 /* ===================================
    🎴 TARJETAS DE RIFAS
 =================================== */
+
+h2, h3 {
+  color: var(--text-light);
+  text-align: center;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
 #rifasContainer {
   display: flex;
   flex-wrap: wrap;
@@ -160,7 +272,9 @@ h3 {
 }
 
 .rifa-card {
-  max-width: 320px;
+  width: 100%;
+  max-width: 350px;
+  height: 100%;
   height: 400px;
   background-color: var(--glass-dark);
   backdrop-filter: blur(2px);

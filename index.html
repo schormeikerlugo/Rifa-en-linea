@@ -9,17 +9,22 @@
   <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"type="module"></script>
 </head>
 <body>
+  <header></header>
   <main>
+
+    <!-- ⚫ Encabezado principal -->
+    <header class="tituloPrincipal">
+      <img src="assets/logo.png" alt="Logo de RifasOnline" class="logo" />
+      <h1>RifasOnline</h1>
+      <div class="btn-header">
+        <a target="_blank" class="btn-info visible"" href="admin.html">
+            Panel de control
+        </a>      
+      </div>
+    </header>
+
     <!-- 🟢 Sección 1: Selección de Rifa -->
     <section id="rifasSection">
-      <div class="tituloPrincipal">
-        <img src="assets/logo.png" alt="Logo">
-        <h1>Rifas online</h1>
-        <p>
-          Participa en nuestras rifas digitales 100% seguras y transparentes. ¡Con solo unos clics podrías llevarte desde productos tecnológicos hasta experiencias inolvidables!
-        </p>
-      </div>
-
       <div id="rifasContainer" class="grid"></div>
     </section>
 
@@ -93,6 +98,15 @@
       <button id="modalCerrar">Cerrar</button>
     </div>
   </div>
+
+  <!-- 🌌 Fondo animado de estrellas -->
+  <div class="sky">
+  <div class="shooting-star"></div>
+  <div class="shooting-star"></div>
+  <div class="shooting-star"></div>
+  <div class="shooting-star"></div>
+</div>
+
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js"></script>
   <script type="module" src="js/cliente/app.js"></script>
